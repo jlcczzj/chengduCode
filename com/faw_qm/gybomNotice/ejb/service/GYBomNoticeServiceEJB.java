@@ -3153,7 +3153,6 @@ public class GYBomNoticeServiceEJB extends BaseServiceImp
 					int ii= 0;
 					String partVersion = "";
 					String penNumber = "";
-					//					System.out.println("number****************="+partNumber);
 					if(partNumber.lastIndexOf("/")>-1 && partNumber.substring(partNumber.lastIndexOf("/")+1).length()==1)
 					{
 						
