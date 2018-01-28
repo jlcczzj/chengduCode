@@ -3159,8 +3159,6 @@ public class GYBomNoticeServiceEJB extends BaseServiceImp
 						
 						l=partNumber.length();
 						ii=partNumber.lastIndexOf("/");
-						//							 System.out.println("l===="+l);
-						//							 System.out.println("i===="+ii);
 						if(l-ii==2)
 						{
 							partVersion=partNumber.substring(l-1);
