@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE publish [
+<!ELEMENT data (property+)>
+<!ATTLIST data
+	name CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+	classname CDATA #REQUIRED
+	publisher CDATA #REQUIRED
+>
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+    id CDATA #REQUIRED
+	name CDATA #REQUIRED
+	type CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+>
+<!ELEMENT publish (data+)>
+]>
+
+<publish>
+	<data name="mpart" displayname="物料" classname="com.faw_qm.jferp.util.QMXMLMaterialSplit" publisher="">
+		<property id ="1" name="part_publish_type" type="basic" displayname="更改标记">part_publish_type</property>
+		<property id ="2" name="mat_num" type="basic" displayname="物料号">mat_num</property>
+		<property id ="3" name="part_number" type="basic" displayname="零件编号">part_number</property>
+		<property id ="4" name="part_name" type="basic" displayname="零件名称">part_name</property>
+		<property id ="5" name="part_unit" type="basic" displayname="默认单位">part_unit</property>
+		<property id ="6" name="part_version" type="basic" displayname="版本">part_version</property>
+		<property id ="7" name="part_type" type="basic" displayname="类型">part_type</property>
+		<property id ="8" name="part_lifecycle_state" type="basic" displayname="生命周期状态">part_state</property>	
+		<property id ="9" name="virtualFlag" type="basic" displayname="虚拟件标识">virtualFlag</property>
+		<property id ="10" name="cgbs" type="basic" displayname="采购件标识">cgbs</property>
+		<property id ="11" name="part_colorflag" type="basic" displayname="颜色件标识">part_colorflag</property>
+		<property id ="12" name="r_code" type="basic" displayname="路线简称">r_code</property>
+		<property id ="13" name="route" type="basic" displayname="制造路线串">route</property>
+		<property id ="14" name="z_route" type="basic" displayname="装配路线串">z_route</property>
+		<property id ="15" name="s_route" type="basic" displayname="送往部门">s_route</property>
+		<property id ="16" name="part_modifytime" type="basic" displayname="更新时间">part_modifytime</property>
+	</data>
+	<data name="structure" displayname="物料结构表" classname="com.faw_qm.jferp.util.QMXMLMaterialStructure" publisher="com.faw_qm.jferp.util.MaterialDataPublisher">
+		<property id ="1" name="structure_publish_type" type="basic" displayname="数据发布标记">structure_publish_type</property>
+		<property id ="2" name="parent_num" type="basic" displayname="父物料">parent_num</property>
+		<property id ="3" name="child_num" type="basic" displayname="子物料">child_num</property>
+		<property id ="4" name="use_quantity" type="basic" displayname="数量">use_quantity</property>
+		<property id ="5" name="use_unit" type="basic" displayname="使用单位">use_unit</property>
+		<property id ="6" name="subGroup" type="basic" displayname="子组号">subGroup</property>
+		<property id ="7" name="BOMLine" type="basic" displayname="BOM行项号">BOMLine</property>
+	</data>
+</publish>

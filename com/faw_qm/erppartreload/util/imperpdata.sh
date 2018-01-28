@@ -1,0 +1,1 @@
+/usr/java6_64/bin/java -Xms512m -Xmx1024m -classpath /pdm/productfactory/phosphor/cpdm/ejbjar/webapp/classes12.jar:/pdm/bea36/weblogic10/server/lib/weblogic.jar:/pdm/productfactory/phosphor/cpdm/classes com.faw_qm.erppartreload.util.ERPPartReLoad

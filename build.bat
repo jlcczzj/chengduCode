@@ -1,0 +1,1 @@
+call ../../productfactory/bin/build.bat %1 %2 %3 %4

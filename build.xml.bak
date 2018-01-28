@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="gb2312"?>
+
+<!-- =================================================================== -->
+<!-- $Id: build.xml,v 1.0                -->
+<!-- =================================================================== -->
+
+<project name="patches" default="core" basedir=".">
+
+  <target name="init">
+
+    <property name="home" value="../.."/>    
+    <property name="component.src" value="../src"/>
+    <property name="component.classpath" value="../classes"/>
+    <property name="phosphor.classpath" value="${home}/productfactory/phosphor/cpdm/classes"/>
+    <property name="phosphor.lib" value="${home}/productfactory/phosphor/cpdm/ejbjar/webapp"/>
+    <property name="component.allclasspath" value="${phosphor.classpath}:${phosphor.lib}/spring.jar:${phosphor.lib}/xerces.jar:${phosphor.lib}/j2ee.jar:${phosphor.lib}/saxon.jar:${phosphor.lib}/crimson.jar:${phosphor.lib}/log4j.jar:${phosphor.lib}/jcad.jar:${phosphor.lib}/jvue.jar:${phosphor.lib}/soap.jar:${phosphor.lib}/jacob.jar:${phosphor.lib}/lucene_cn.jar:${phosphor.lib}/lucene-demo.jar:${phosphor.lib}/jcad.jar:${phosphor.lib}/dom4j.jar:${phosphor.lib}/jdom.jar:${phosphor.lib}/jai_codec.jar:${phosphor.lib}/jai_core.jar:${phosphor.lib}/jxl.jar:${phosphor.lib}/changetif2jpg.jar:${phosphor.lib}/poi-3.0.2-FINAL.jar:${phosphor.lib}/poi-3.0.1-FINAL-20070705.jar"/>  
+  
+       
+  </target>
+  <target name="banner">
+      <echo>+---------------------------------------+</echo>
+      <echo>+  构建补丁模块，将变更更新至产品       +</echo>
+      <echo>+  补丁编号   V4R3P002_20091223        +</echo>     
+      <echo>+---------------------------------------+</echo>
+  </target>
+ <!-- <target name="lib" depends="init" >
+     <copy todir="${home}/productfactory/phosphor/cpdm/lib" overwrite="true">
+          <fileset dir="../lib"/>
+     </copy>
+  </target> --> 
+  <target name="compile1" depends="init">
+    <javac srcdir="${component.src}"
+           destdir="${component.classpath}"
+	   classpath="${component.allclasspath}"
+	   includes="com/**/lifecycle/**"
+	   
+	   />
+  </target>
+  
+  <target name="compile" depends="init">
+    <javac srcdir="${component.src}"
+           destdir="${component.classpath}"
+	   classpath="${component.allclasspath}"
+	   includes="com/**"
+	   
+	   />
+  </target>  
+  
+  <target name="copyclass" depends="compile">
+    					<copy todir="${phosphor.classpath}" overwrite="true">
+          			<fileset dir="${component.classpath}"/>
+    					</copy> 
+  						<copy file="../metadata/properties/log4jServer.properties" 
+              	tofile="${phosphor.classpath}/log4j.properties" overwrite="true"/>
+ 							<copy file="../metadata/properties/log4jClient.properties" 
+              	tofile="${phosphor.classpath}/properties/log4jClient.properties" overwrite="true"/>
+              <copy file="../metadata/properties/capp.properties" 
+              	tofile="${phosphor.classpath}/properties/capp.properties" overwrite="true"/>
+              <copy file="../metadata/properties/ColorSetting.properties" 
+              	tofile="${phosphor.classpath}/properties/ColorSetting.properties" overwrite="true"/>
+              <copy file="../metadata/properties/cpdmintegration.properties" 
+              	tofile="${phosphor.classpath}/properties/cpdmintegration.properties" overwrite="true"/>
+              <copy file="../metadata/properties/enproject.properties" 
+              	tofile="${phosphor.classpath}/properties/enproject.properties" overwrite="true"/>
+              <copy file="../metadata/properties/inte.properties" 
+              	tofile="${phosphor.classpath}/properties/inte.properties" overwrite="true"/>
+              <copy file="../metadata/properties/mappingreceive.properties" 
+              	tofile="${phosphor.classpath}/properties/mappingreceive.properties" overwrite="true"/>
+              <copy file="../metadata/properties/pcfg.properties" 
+              	tofile="${phosphor.classpath}/properties/pcfg.properties" overwrite="true"/>
+              <copy file="../metadata/properties/phosphorpdm.properties" 
+              	tofile="${phosphor.classpath}/properties/phosphorpdm.properties" overwrite="true"/>
+              <copy file="../metadata/properties/ration.properties" 
+              	tofile="${phosphor.classpath}/properties/ration.properties" overwrite="true"/>
+              <copy file="../metadata/properties/serviceadapter.properties" 
+              	tofile="${phosphor.classpath}/properties/serviceadapter.properties" overwrite="true"/>
+              <copy file="../metadata/properties/toolnum.properties" 
+              	tofile="${phosphor.classpath}/properties/toolnum.properties" overwrite="true"/>
+              <copy file="../metadata/properties/workflow.properties" 
+              	tofile="${phosphor.classpath}/properties/workflow.properties" overwrite="true"/>
+              <copy file="../metadata/properties/services.xml" 
+              	tofile="${phosphor.classpath}/properties/services.xml" overwrite="true"/>
+    </target>
+
+  
+  <target name="sql" depends="init" >
+     <copy todir="${home}/productfactory/phosphor/cpdm/support/sql" overwrite="true">
+          <fileset dir="../metadata/sql"/>
+     </copy>
+  </target>
+  <target name="loadfiles" depends="init" >
+     <copy todir="${home}/productfactory/phosphor/cpdm/support/loadFiles" overwrite="true">
+          <fileset dir="../metadata/loadFiles"/>
+     </copy>
+  </target>
+ <target name="properties" depends="init">
+     <copy todir="${home}/productfactory/phosphor/cpdm/classes/properties" overwrite="true">          
+           <fileset dir="../metadata/properties">             
+             <exclude name="log4j*"/>
+           </fileset>          
+     </copy>
+  </target>
+
+  <target name="webapp" depends="init" >
+     <copy todir="${home}/productfactory/phosphor/cpdm/ejbjar/webapp" overwrite="true">
+          <fileset dir="../metadata/webapp"/>
+     </copy>
+  </target>
+
+    <target name="description" depends="init" >
+     <copy todir="${home}/productfactory/phosphor/cpdm/ejbjar" overwrite="true">
+          <fileset dir="../metadata/description"/>
+     </copy>
+  
+  </target>  
+    <target name="introspection" depends="init">
+     <copy todir="${home}/productfactory/phosphor/cpdm/classes/introspection" overwrite="true">
+          <fileset dir="../metadata/introspection"/>
+     </copy>
+  </target>
+  
+ <target name="client" depends="init,basejar,cadjar,cadappletjar,cappjar,frameworkjar,partjar,pcfgjar,jviewjar,viewdxf,viewmarkup,enproject,visual,ration,rationexp"/>
+
+  
+    <target name="basejar" depends="compile">
+        
+  	<mkdir dir="../temp/base"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/base.jar" dest="../temp/base" overwrite="true"/>
+    		<copy todir="../temp/base/com/faw_qm/acl" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/acl"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/adoptnotice" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/adoptnotice"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/borrow" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/borrow"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/calendar" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/calendar"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/clients" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/clients"/>
+    		</copy>
+    	  <copy todir="../temp/base/com/faw_qm/config" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/config"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/consadoptnotice" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/consadoptnotice"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/doc" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/doc"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/enterprise" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/enterprise"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/folder" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/folder"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/lifecycle" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/lifecycle"/>
+    		</copy>
+    	  <copy todir="../temp/base/com/faw_qm/load" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/load"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/lock" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/lock"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/notify" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/notify"/>
+    	  </copy>
+    	  <copy todir="../temp/base/com/faw_qm/ownership" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/ownership"/>
+    	  </copy>
+        <copy todir="../temp/base/com/faw_qm/persist" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/persist"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/project" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/project"/>
+    		</copy>
+    	 	<copy todir="../temp/base/com/faw_qm/sysadmin" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/sysadmin"/>
+    		</copy> 
+    		<copy todir="../temp/base/com/faw_qm/users" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/users"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/util" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/util"/>
+    		</copy>
+    		
+    		<copy todir="../temp/base/com/faw_qm/version" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/version"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/wip" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/wip"/>
+    		</copy>
+    		<copy todir="../temp/base/com/faw_qm/workflow" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/workflow"/>
+    		</copy>
+    	
+    	<copy file="../metadata/introspection/registry.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>    	 
+      <copy file="../metadata/introspection/consadoptnotice.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/enterprise.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/folder.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/users.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+			<copy file="../metadata/introspection/adoptnotice.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/version.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/borrow.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/buildnum.xml" 
+              todir="../temp/base/introspection" overwrite="true"/>
+      
+      <copy file="../metadata/properties/workflow.properties" 
+              tofile="../temp/base/properties/workflow.properties" overwrite="true"/> 
+      <copy file="../metadata/properties/phosphorpdm.properties" 
+              tofile="../temp/base/properties/phosphorpdm.properties" overwrite="true"/>         
+      <copy file="../metadata/properties/log4jClient.properties" 
+              tofile="../temp/base/properties/log4j.properties" overwrite="true"/> 
+      <copy file="../metadata/properties/log4jServer.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              
+              <copy file="../metadata/properties/toolnum.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              <copy file="../metadata/properties/serviceadapter.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              <copy file="../metadata/properties/cpdmintegration.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              <copy file="../metadata/properties/ColorSetting.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              <copy file="../metadata/properties/inte.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              <copy file="../metadata/properties/mappingreceive.properties" 
+              todir="../temp/base/properties" overwrite="true"/>
+              
+     	<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/base.jar"/> 	   	 		 		  
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/base.jar" update="true">
+         	<fileset dir="../temp/base" />
+        </jar>             
+    </target>
+    
+    <target name="cadjar" depends="compile">          
+  	<mkdir dir="../temp/cad"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cad.jar" dest="../temp/cad" overwrite="true"/>
+      <copy todir="../temp/cad/com/faw_qm/epm" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/epm"/>
+    	</copy> 
+    	<copy todir="../temp/cad/com/faw_qm/cadepm" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/cadepm"/>
+    	</copy> 
+  	  <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cad.jar"/>    	   	
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cad.jar" update="true">
+         	<fileset dir="../temp/cad" />
+      </jar>        
+    </target>
+    
+    <target name="cadappletjar" depends="compile">          
+  	<mkdir dir="../temp/epm/client"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cadapplet.jar" dest="../temp/epm/client" overwrite="true"/>
+      <copy todir="../temp/cad/com/faw_qm/epm/client" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/epm"/>
+    	</copy> 
+  	  <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cadapplet.jar"/>    	   	
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/cadapplet.jar" update="true">
+         	<fileset dir="../temp/epm/client" />
+      </jar>        
+    </target>
+    
+    <target name="cappjar" depends="compile">           
+  	<mkdir dir="../temp/capp"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/capp.jar" dest="../temp/capp" overwrite="true"/>  	
+       <copy todir="../temp/capp/com/faw_qm/cappclients" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/cappclients"/>
+    	</copy> 
+        <copy todir="../temp/capp/com/faw_qm/capp" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/capp"/>
+    	</copy>    
+   <copy todir="../temp/capp/com/faw_qm/print" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/print"/>
+    	</copy>   
+        <copy todir="../temp/capp/com/faw_qm/summary" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/summary"/>
+    	</copy>
+    	<copy todir="../temp/capp/com/faw_qm/resource" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/resource"/>
+    	</copy>	  
+    	<copy todir="../temp/capp/com/faw_qm/technics" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/technics"/>
+    	</copy>	
+    	<copy todir="../temp/capp/com/faw_qm/codemanage" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/codemanage"/>
+    	</copy>
+    	<copy todir="../temp/capp/com/faw_qm/consprint" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/consprint"/>
+    	</copy>  	 
+    	<copy todir="../temp/capp/com/faw_qm/extend" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/extend"/>
+    	</copy>   
+    	<copy todir="../temp/capp/com/faw_qm/clients" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/clients"/>
+    	</copy> 	 	
+    	
+    	<copy file="../metadata/introspection/capp.xml" 
+              todir="../temp/capp/introspection" overwrite="true"/>    	 
+    	<copy file="../metadata/introspection/resource.xml" 
+              todir="../temp/capp/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/print.xml" 
+              todir="../temp/capp/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/technics_route.xml" 
+              todir="../temp/capp/introspection" overwrite="true"/>
+      <copy file="../metadata/introspection/constechnics_route.xml" 
+              todir="../temp/capp/introspection" overwrite="true"/>      
+      
+      <copy file="../metadata/properties/capp.properties" 
+              tofile="../temp/capp/properties/capp.properties" overwrite="true"/> 
+    	
+      <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/capp.jar"/>    	    	
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/capp.jar" update="true">
+         	<fileset dir="../temp/capp" />
+      </jar>
+    </target>    
+    
+    <target name="frameworkjar" depends="init">          
+  	<mkdir dir="../temp/framework"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/framework.jar" dest="../temp/framework" overwrite="true"/>  	
+      <copy todir="../temp/framework/com/faw_qm/framework" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/framework"/>
+    	</copy>
+    	<copy todir="../temp/framework/com/faw_qm/util" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/util"/>
+    	</copy>
+
+    	<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/framework.jar"/>
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/framework.jar" update="true">
+         	<fileset dir="../temp/framework" />
+      </jar>        
+    </target>
+    
+    <target name="partjar" depends="compile">
+        
+  	<mkdir dir="../temp/part"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/part.jar" dest="../temp/part" overwrite="true"/>
+        <copy todir="../temp/part/com/faw_qm/part" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/part"/>
+    	</copy>
+    	   <copy todir="../temp/part/com/faw_qm/iba" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/iba"/>
+    	</copy>
+    	<copy file="../metadata/introspection/part.xml" 
+              todir="../temp/part/introspection" overwrite="true"/>   
+         	
+  	    <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/part.jar"/>  	
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/part.jar" update="true">
+         	<fileset dir="../temp/part" />
+        </jar>        
+    </target>
+    
+    <target name="pcfgjar" depends="init">          
+  	<mkdir dir="../temp/pcfg"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/pcfg.jar" dest="../temp/pcfg" overwrite="true"/>
+  	<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/pcfg.jar"/>
+      <copy todir="../temp/pcfg/com/faw_qm/pcfg" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/pcfg"/>
+    	</copy>
+    <copy todir="../temp/pcfg/com/faw_qm/common" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/common"/>
+    	</copy>
+    	
+    	<copy file="../metadata/introspection/pcfg.xml" 
+              todir="../temp/pcfg/introspection" overwrite="true"/>      
+      
+      <copy file="../metadata/properties/pcfg.properties" 
+              tofile="../temp/pcfg/properties/pcfg.properties" overwrite="true"/> 
+  	
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/pcfg.jar" update="true">
+         	<fileset dir="../temp/pcfg" />
+      </jar>     
+      <delete dir="../temp"/>   
+    </target>    
+    
+    
+    <target name="jviewjar" depends="init">          
+  	<mkdir dir="../temp/jview"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/jview.jar" dest="../temp/jview" overwrite="true"/>
+  	<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/jview.jar"/>
+      <copy todir="../temp/jview/com/faw_qm/jview" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/jview"/>
+    	</copy>
+    
+  	
+      <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/jview.jar" update="true">
+         	<fileset dir="../temp/jview" />
+      </jar>     
+      <delete dir="../temp"/>   
+    </target>
+    
+    
+ 		<target name="viewdxf" depends="compile">          
+  	<mkdir dir="../temp/viewdxf"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewdxf.jar" dest="../temp/viewdxf" overwrite="true"/>
+  	  <copy todir="../temp/viewdxf/com/faw_qm/viewdxf" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/viewdxf"/>
+    	</copy>  
+    	 <copy todir="../temp/viewdxf/com/faw_qm/viewdxf/cad/app/cadv" overwrite="true">
+      		<fileset dir="../src/com/faw_qm/viewdxf/cad/app/cadv"/>
+    	</copy>    
+     <copy todir="${phosphor.classpath}/com/faw_qm/viewdxf/cad/app/cadv" overwrite="true">
+      		<fileset dir="../src/com/faw_qm/viewdxf/cad/app/cadv"/>
+    	</copy>    
+			<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewdxf.jar"/>
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewdxf.jar" update="true">
+         	<fileset dir="../temp/viewdxf" />
+        </jar>        
+    </target> 
+    
+    <target name="viewmarkup" depends="compile">          
+  	<mkdir dir="../temp/viewmarkup"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewmarkup.jar" dest="../temp/viewmarkup" overwrite="true"/>
+  	
+
+        <copy todir="../temp/viewmarkup/com/faw_qm/viewmarkup" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/viewmarkup"/>
+    	</copy>
+    	
+    	<copy file="../metadata/introspection/viewmarkup.xml" 
+              todir="../temp/viewmarkup/introspection" overwrite="true"/>
+        <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewmarkup.jar"/>
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/viewmarkup.jar" update="true">
+         	<fileset dir="../temp/viewmarkup" />
+        </jar>        
+    </target> 
+    
+    <target name="enproject" depends="compile">          
+  	<mkdir dir="../temp/enproject"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/enproject.jar" dest="../temp/enproject" overwrite="true"/>
+
+
+        <copy todir="../temp/enproject/com/faw_qm/enproject" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/enproject"/>
+    	</copy>
+    	
+    	<copy file="../metadata/introspection/enproject.xml" 
+              todir="../temp/enproject/introspection" overwrite="true"/>
+              
+              <copy file="../metadata/properties/enproject.properties" 
+              tofile="../temp/enproject/properties/enproject.properties" overwrite="true"/> 
+                	<delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/enproject.jar"/>
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/enproject.jar" update="true">
+         	<fileset dir="../temp/enproject" />
+        </jar>        
+    </target> 
+    
+    <target name="visual" depends="compile">          
+  	<mkdir dir="../temp/visual"/>
+  	<unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/visual.jar" dest="../temp/visual" overwrite="true"/>
+
+
+        <copy todir="../temp/visual/com/faw_qm/visual" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/visual"/>
+    	</copy>
+    	
+        <delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/visual.jar"/>
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/visual.jar" update="true">
+         	<fileset dir="../temp/visual" />
+        </jar>        
+    </target> 
+    
+    <target name="ration" depends="compile">          
+  	<mkdir dir="../temp/ration"/>
+  	<!--unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/ration.jar" dest="../temp/ration" overwrite="true"/-->
+  	<!--delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/ration.jar"/-->
+
+        <copy todir="../temp/ration/com/faw_qm/ration" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/ration"/>
+    	</copy>
+    	
+    	<copy file="../metadata/introspection/ration.xml" 
+              todir="../temp/ration/introspection" overwrite="true"/>
+              
+              <copy file="../metadata/properties/ration.properties" 
+              tofile="../temp/ration/properties/ration.properties" overwrite="true"/> 
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/ration.jar" update="true">
+         	<fileset dir="../temp/ration" />
+        </jar>        
+    </target> 
+    
+    <target name="rationexp" depends="compile">          
+  	<mkdir dir="../temp/rationexp"/>
+  	<!--unjar src="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/rationexp.jar" dest="../temp/rationexp" overwrite="true"/-->
+  	<!--delete file="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/rationexp.jar"/-->
+
+        <copy todir="../temp/rationexp/com/faw_qm/rationexp" overwrite="true">
+      		<fileset dir="../classes/com/faw_qm/rationexp"/>
+    	</copy>
+    	
+    	<copy file="../metadata/introspection/rationexp.xml" 
+              todir="../temp/ration/introspection" overwrite="true"/>
+              
+        <jar jarfile="${home}/productfactory/phosphor/cpdm/ejbjar/webapp/ration.jar" update="true">
+         	<fileset dir="../temp/ration" />
+        </jar>        
+    </target> 
+    
+    
+  <target name="deploy" depends="client,introspection,sql,loadfiles,copyclass,webapp,description,properties"/>  
+  <target name="core" depends="banner,deploy" />
+  <target name="all" depends="" />
+
+</project>

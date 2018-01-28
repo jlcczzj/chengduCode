@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE publish [
+<!ELEMENT data (property+)>
+<!ATTLIST data
+	name CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+	classname CDATA #REQUIRED
+	publisher CDATA #REQUIRED
+>
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+    id CDATA #REQUIRED
+	name CDATA #REQUIRED
+	type CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+>
+<!ELEMENT publish (data+)>
+]>
+
+<publish>
+	<data name="mpart" displayname="物料" classname="com.faw_qm.erp.util.QMXMLMaterialSplit" publisher="">
+		<property id ="1" name="part_publish_type" type="basic" displayname="更改标记">part_publish_type</property>
+		<property id ="2" name="mat_num" type="basic" displayname="物料号">mat_num</property>
+		<property id ="3" name="part_number" type="basic" displayname="零件编号">part_number</property>
+		<property id ="4" name="part_name" type="basic" displayname="零件名称">part_name</property>
+		<property id ="5" name="part_unit" type="basic" displayname="单位">part_unit</property>
+		<property id ="9" name="part_version" type="basic" displayname="零部件版本">part_version</property>
+		<property id ="6" name="part_type" type="basic" displayname="类型">part_type</property>
+		<property id ="7" name="part_source" type="basic" displayname="来源">part_source</property>
+		<property id ="10" name="route_note" type="basic" displayname="制造路线">route_note</property>
+		<property id ="11" name="z_route_note" type="basic" displayname="装配路线">z_route_note</property>
+		<property id ="12" name="route" type="basic" displayname="制造路线串">route</property>
+		<property id ="13" name="z_route" type="basic" displayname="送往部门">z_route</property>
+		<property id ="14" name="生命周期状态" type="iba" displayname="生命周期状态">iba_shizhibs</property>	
+		<property id ="15" name="材料牌号" type="iba" displayname="材料牌号">materialType</property>
+		<property id ="16" name="材料规格" type="iba" displayname="材料规格">materialSpec</property>
+		<!--CCBegin SS1-->
+		<!--property id ="17" name="weight" type="iba" displayname="重量">weight</property-->	
+		<property id ="17" name="重量" type="iba" displayname="重量">weight</property>
+		<!--CCEnd SS1-->
+		
+	</data>
+	<data name="structure" displayname="物料结构表" classname="com.faw_qm.erp.util.QMXMLMaterialStructure" publisher="com.faw_qm.erp.util.MaterialDataPublisher">
+		<property id ="1" name="structure_publish_type" type="basic" displayname="数据发布标记">structure_publish_type</property>
+		<property id ="2" name="parent_num" type="basic" displayname="父零部件编号">parent_num</property>
+		<property id ="3" name="child_num" type="basic" displayname="子零部件编号">child_num</property>
+		<property id ="4" name="use_quantity" type="basic" displayname="使用数量">use_quantity</property>
+		<property id ="5" name="use_unit" type="basic" displayname="使用单位">use_unit</property>
+		<!--property id ="6" name="option_flag" type="basic" displayname="选装标识">option_flag</property-->
+	</data>
+</publish>

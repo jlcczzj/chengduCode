@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!DOCTYPE publish [
+<!ELEMENT data (property+)>
+<!ATTLIST data
+	name CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+	classname CDATA #REQUIRED
+	publisher CDATA #REQUIRED
+>
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+    id CDATA #REQUIRED
+	name CDATA #REQUIRED
+	type CDATA #REQUIRED
+	displayname CDATA #REQUIRED
+>
+<!ELEMENT publish (data+)>
+]>
+
+<publish>
+	<data name="process" displayname="工艺规程" classname="com.faw_qm.jferp.util.QMXMLProcess" publisher="com.faw_qm.jferp.util.TechnicsDataPublisher">
+		<property id ="1" name="step_serial_number" type="basic" displayname="工序号">step_serial_number</property>
+		<property id ="2" name="step_number" type="basic" displayname="工序编号">step_number</property>
+		<property id ="3" name="step_name" type="basic" displayname="工序名称">step_name</property>
+		<property id ="4" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="5" name="step_category" type="basic" displayname="工序种类">step_category</property>	
+		<property id ="6" name="important_level" type="basic" displayname="工序类别">important_level</property>
+		<property id ="7" name="step_type" type="basic" displayname="加工类型">step_type</property>
+		<property id ="8" name="time_ration" type="basic" displayname="工时定额">time_ration</property>		
+		<property id ="9" name="cure_time" type="basic" displayname="加工工时">cure_time</property>
+		<property id ="10" name="assistant" type="basic" displayname="辅助工时">assistant</property>	
+		<property id ="11" name="workCenter" type="basic" displayname="工作中心">workCenter</property>
+		<property id ="12" name="operator_num" type="iba" displayname="定员">operator_num</property>
+	</data>
+	<data name="part" displayname="工艺关联零部件" classname="com.faw_qm.jferp.util.QMXMLProcessPart" publisher="">
+		<property id ="1" name="material_number" type="basic" displayname="物料号">material_number</property>
+		<property id ="2" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="3" name="part_version" type="basic" displayname="零件版本">part_version</property>
+		<property id ="4" name="part_number" type="basic" displayname="零件号">part_number</property>
+		<property id ="5" name="part_name" type="basic" displayname="零件名称">part_name</property>	
+		<property id ="6" name="splited" type="basic" displayname="已转换">splited</property>
+		<property id ="7" name="process_code" type="basic" displayname="过程代码">process_code</property>	
+		<property id ="8" name="main_part" type="basic" displayname="主要零件标识">main_part</property>
+		<property id ="9" name="main_process" type="basic" displayname="主要工艺标识">main_process</property>
+	</data>
+	<data name="subpart" displayname="工序关联子件" classname="com.faw_qm.jferp.util.QMXMLStepPart" publisher="">
+		<property id ="1" name="step_serial_number" type="basic" displayname="工序号">step_serial_number</property>
+		<property id ="2" name="material_number" type="basic" displayname="物料号">material_number</property>
+		<property id ="3" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="4" name="part_number" type="basic" displayname="零件号">part_number</property>
+		<property id ="5" name="part_name" type="basic" displayname="零件名称">part_name</property>	
+		<property id ="6" name="use_quantity" type="basic" displayname="使用数量">use_quantity</property>
+		<property id ="7" name="splited" type="basic" displayname="已转换">splited</property>
+	</data>
+	<data name="equipment" displayname="工序关联的设备" classname="com.faw_qm.jferp.util.QMXMLStepEquip" publisher="">
+		<property id ="1" name="step_serial_number" type="basic" displayname="工序号">step_serial_number</property>
+		<property id ="2" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="3" name="equi_number" type="basic" displayname="设备编号">equi_number</property>
+		<property id ="4" name="equi_name" type="basic" displayname="设备名称">equi_name</property>
+		<property id ="5" name="model_number" type="basic" displayname="设备型号">model_number</property>	
+		<property id ="6" name="position_number" type="basic" displayname="平面图号">position_number</property>
+		<property id ="7" name="use_quantity" type="basic" displayname="使用数量">use_quantity</property>
+	</data>
+	<data name="tool" displayname="工序关联的工装" classname="com.faw_qm.jferp.util.QMXMLStepTool" publisher="">
+		<property id ="1" name="step_serial_number" type="basic" displayname="工序号">step_serial_number</property>
+		<property id ="2" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="3" name="tool_number" type="basic" displayname="工装编号">tool_number</property>
+		<property id ="4" name="tool_name" type="basic" displayname="工装名称">tool_name</property>
+		<property id ="5" name="use_quantity" type="basic" displayname="使用数量">use_quantity</property>
+	</data>
+	<data name="rawMaterial" displayname="工艺关联的主要材料" classname="com.faw_qm.jferp.util.QMXMLRawMaterial" publisher="">
+		<property id ="1" name="mat_number" type="basic" displayname="材料编号">mat_number</property>
+		<property id ="2" name="mat_name" type="basic" displayname="材料名称">mat_name</property>
+		<property id ="3" name="mat_brand" type="basic" displayname="材料牌号">mat_brand</property>
+		<property id ="4" name="mat_specs" type="basic" displayname="材料规格">mat_specs</property>
+		<property id ="5" name="main_code" type="basic" displayname="主要材料标识">main_code</property>	
+		<property id ="6" name="ration" type="basic" displayname="定额">ration</property>
+		<property id ="7" name="mat_Fun" type="basic" displayname="材料状态">mat_Fun</property>
+		<property id ="8" name="mat_Cri" type="basic" displayname="材料标准">mat_Cri</property>
+	</data>
+	<data name="assistantMaterial" displayname="工序关联的辅助材料" classname="com.faw_qm.jferp.util.QMXMLAstMaterial" publisher="">
+		<property id ="1" name="step_serial_number" type="basic" displayname="工序号">step_serial_number</property>
+		<property id ="2" name="route_code" type="basic" displayname="部门代码">route_code</property>
+		<property id ="3" name="mat_number" type="basic" displayname="材料编号">mat_number</property>
+		<property id ="4" name="mat_name" type="basic" displayname="材料名称">mat_name</property>
+		<property id ="5" name="mat_brand" type="basic" displayname="材料牌号">mat_brand</property>	
+		<property id ="6" name="mat_specs" type="basic" displayname="材料规格">mat_specs</property>
+		<property id ="7" name="ration" type="basic" displayname="定额">ration</property>	
+		<property id ="8" name="unit" type="basic" displayname="单位">unit</property>
+		<property id ="9" name="mat_Fun" type="basic" displayname="材料状态">mat_Fun</property>
+		<property id ="10" name="mat_Cri" type="basic" displayname="材料标准">mat_Cri</property>
+	</data>
+</publish>
